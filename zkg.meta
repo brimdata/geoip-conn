@@ -1,0 +1,6 @@
+[package]
+script_dir = zeek
+description = Adds additional fields to the conn.log for the data obtained via Zeek's GeoLocation feature (https://docs.zeek.org/en/current/frameworks/geoip.html).
+tags = conn, geolocation, logging
+version = 1.0.0
+

@@ -1,0 +1,1 @@
+@load ./geoip-conn.zeek
