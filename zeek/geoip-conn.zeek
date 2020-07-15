@@ -14,16 +14,16 @@ redef mmdb_dir = @DIR;
 
 export {
 	type GeoInfo: record {
-		orig_country_code: string &optional;
-		orig_region: string &optional;
-		orig_city: string &optional;
-		orig_latitude: double &optional;
-		orig_longitude: double &optional;
-		resp_country_code: string &optional;
-		resp_region: string &optional;
-		resp_city: string &optional;
-		resp_latitude: double &optional;
-		resp_longitude: double &optional;
+		orig_country_code: string &optional &log;
+		orig_region: string &optional &log;
+		orig_city: string &optional &log;
+		orig_latitude: double &optional &log;
+		orig_longitude: double &optional &log;
+		resp_country_code: string &optional &log;
+		resp_region: string &optional &log;
+		resp_city: string &optional &log;
+		resp_latitude: double &optional &log;
+		resp_longitude: double &optional &log;
 	};
 
 	redef record Conn::Info += {
