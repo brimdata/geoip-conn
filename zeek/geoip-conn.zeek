@@ -14,51 +14,56 @@ redef mmdb_dir = @DIR;
 
 export {
 	type GeoInfo: record {
-		orig_country_code: string &optional &log;
-		orig_region: string &optional &log;
-		orig_city: string &optional &log;
-		orig_latitude: double &optional &log;
-		orig_longitude: double &optional &log;
-		resp_country_code: string &optional &log;
-		resp_region: string &optional &log;
-		resp_city: string &optional &log;
-		resp_latitude: double &optional &log;
-		resp_longitude: double &optional &log;
+		country_code: string &optional &log;
+		region: string &optional &log;
+		city: string &optional &log;
+		latitude: double &optional &log;
+		longitude: double &optional &log;
+	};
+
+	type GeoPair: record {
+		orig: GeoInfo &optional &log;
+		resp: GeoInfo &optional &log;
 	};
 
 	redef record Conn::Info += {
-		geo: GeoInfo &optional &log;
+		geo: GeoPair &optional &log;
 	};
 }
 
 event connection_state_remove(c: connection) 
 	{
-	local geodata: GeoInfo;
-
+	local orig_geo: GeoInfo;
 	local orig_loc = lookup_location(c$id$orig_h);
 	if ( orig_loc?$country_code )
-		geodata$orig_country_code = orig_loc$country_code;
+		orig_geo$country_code = orig_loc$country_code;
 	if ( orig_loc?$region )
-		geodata$orig_region = orig_loc$region;
+		orig_geo$region = orig_loc$region;
 	if ( orig_loc?$city )
-		geodata$orig_city = orig_loc$city;
+		orig_geo$city = orig_loc$city;
 	if ( orig_loc?$latitude )
-		geodata$orig_latitude = orig_loc$latitude;
+		orig_geo$latitude = orig_loc$latitude;
 	if ( orig_loc?$longitude )
-		geodata$orig_longitude = orig_loc$longitude;
+		orig_geo$longitude = orig_loc$longitude;
 
+	local resp_geo: GeoInfo;
 	local resp_loc = lookup_location(c$id$resp_h);
 	if ( resp_loc?$country_code )
-		geodata$resp_country_code = resp_loc$country_code;
+		resp_geo$country_code = resp_loc$country_code;
 	if ( resp_loc?$region )
-		geodata$resp_region = resp_loc$region;
+		resp_geo$region = resp_loc$region;
 	if ( resp_loc?$city )
-		geodata$resp_city = resp_loc$city;
+		resp_geo$city = resp_loc$city;
 	if ( resp_loc?$latitude )
-		geodata$resp_latitude = resp_loc$latitude;
+		resp_geo$latitude = resp_loc$latitude;
 	if ( resp_loc?$longitude )
-		geodata$resp_longitude = resp_loc$longitude;
+		resp_geo$longitude = resp_loc$longitude;
 
-	c$conn$geo = geodata;
+	local geo_pair: GeoPair;
+	geo_pair$orig = orig_geo;
+	geo_pair$resp = resp_geo;
+
+	c$conn$geo = geo_pair;
+
 	}
 
