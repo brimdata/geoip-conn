@@ -4,8 +4,8 @@
 
 If you have Zeek compiled with
 [GeoLocation support](https://docs.zeek.org/en/current/frameworks/geoip.html),
-this package will populate fields in Zeek `conn` logs for each originating and
-responding IP that describe:
+this package will add a nested record called `geo` to the `conn` log that
+conains fields for each originating and responding IP that describe:
 
 * Country code
 * Region
