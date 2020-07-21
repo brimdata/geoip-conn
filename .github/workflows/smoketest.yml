@@ -21,4 +21,4 @@ jobs:
         PACKAGE_SHA: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v1
-      - run: ./smoketest.sh
+      - run: sudo -E ./smoketest.sh
