@@ -14,8 +14,8 @@ sudo make -j$(nproc) install
 sudo pip install zkg
 PATH="/usr/local/zeek/bin:$PATH" sudo zkg autoconfig
 sudo zkg install --force geoip-conn --version "$PACKAGE_SHA"
-find /opt/zeek/share/zeek/site
-echo '@load packages' | sudo tee -a /opt/zeek/share/zeek/site/local.zeek
+find /usr/local/zeek/share/zeek/site
+echo '@load packages' | sudo tee -a /usr/local/zeek/share/zeek/site/local.zeek
 
 # Do a lookup of an IP that's known to have a stable location.
 sudo /usr/local/zeek/bin/zeek -e "print lookup_location(199.83.220.115);" local
