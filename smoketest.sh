@@ -4,8 +4,8 @@
 # not compiled with libmaxminddba.
 sudo apt-get update
 sudo apt-get install cmake make gcc g++ flex bison libpcap-dev libssl-dev python-dev swig zlib1g-dev libmaxminddb-dev
-git clone --recursive https://github.com/zeek/zeek
-cd zeek
+git clone --recursive https://github.com/zeek/zeek zeek-src
+cd zeek-src
 ./configure --prefix=/usr/local/zeek
 make -j$(nproc)
 sudo make -j$(nproc) install
