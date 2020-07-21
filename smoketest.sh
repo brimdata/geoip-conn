@@ -11,6 +11,7 @@ pip install zkg
 export PATH="/opt/zeek/bin:$PATH"
 zkg autoconfig
 zkg install --force geoip-conn --version "$PACKAGE_SHA"
+find /opt/zeek/share/zeek/site
 echo "@load ./geoip-conn/zeek" >> /opt/zeek/share/zeek/site/local.zeek
 
 # Do a lookup of an IP that's known to have a stable location.
