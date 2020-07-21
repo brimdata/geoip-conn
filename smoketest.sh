@@ -1,5 +1,8 @@
 #!/bin/bash -x
 
+apt-get update
+apt-get install libmaxminddb-dev
+
 # Install latest binary Zeek (as described below https://zeek.org/get-zeek/)
 echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_18.04/ /' | tee /etc/apt/sources.list.d/security:zeek.list
 curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_18.04/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/security:zeek.gpg > /dev/null
