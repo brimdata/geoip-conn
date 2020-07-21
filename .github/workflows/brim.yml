@@ -1,0 +1,23 @@
+name: Brim
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - smoketest
+
+defaults:
+ run:
+   shell: bash
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+    env:
+        PACKAGE_SHA: ${{ github.sha }}
+    steps:
+      - run: ./smoketest.sh
