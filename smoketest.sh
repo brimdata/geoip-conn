@@ -19,4 +19,4 @@ find /usr/local/zeek/share/zeek/site
 echo '@load packages' | tee -a /usr/local/zeek/share/zeek/site/local.zeek
 
 # Do a lookup of an IP that's known to have a stable location.
-zeek -e "print lookup_location(199.83.220.115);" local | grep "San Francisco"
+zeek -e "print lookup_location(199.83.220.115);" local | grep "Somewhere Else"
