@@ -1,9 +1,13 @@
 #!/bin/bash -x
 
-if [ -z "$PULL_REQUEST_SHA" ]; then
+# On a newly-opened PR, I've seen $GITHUB_SHA gets populated with a commit
+# that can't actually be checked out. The Action passes us a value for the
+# latest commit SHA for the source branch to cover that case, so use that
+# instead when it's there.
+if [ -z "$PULL_REQUEST_HEAD_SHA" ]; then
   PACKAGE_SHA="$GITHUB_SHA"
 else
-  PACKAGE_SHA="$PULL_REQUEST_SHA"
+  PACKAGE_SHA="$PULL_REQUEST_HEAD_SHA"
 fi
 
 # Alas, we must compile Zeek because I've found the binary distributions are
