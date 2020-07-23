@@ -1,4 +1,4 @@
-name: Brim
+name: Smoketest
 
 on:
   pull_request:
@@ -17,7 +17,7 @@ jobs:
       matrix:
         os: [ubuntu-18.04]
     env:
-        PACKAGE_SHA: ${{ github.sha }}
+        PULL_REQUEST_SHA: ${{ github.event.pull_request.head.sha }}
     steps:
       - uses: actions/checkout@v1
       - run: sudo -E ./smoketest.sh

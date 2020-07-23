@@ -1,5 +1,11 @@
 #!/bin/bash -x
 
+if [ -z "$PULL_REQUEST_SHA" ]; then
+  PACKAGE_SHA="$GITHUB_SHA"
+else
+  PACKAGE_SHA="$PULL_REQUEST_SHA"
+fi
+
 # Alas, we must compile Zeek because I've found the binary distributions are
 # not compiled with libmaxminddb.
 apt-get update
