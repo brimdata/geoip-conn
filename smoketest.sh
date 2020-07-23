@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash -ex
 
 # On a newly-opened PR, I've seen $GITHUB_SHA gets populated with a commit
 # that can't actually be checked out. The Action passes us a value for the
