@@ -1,0 +1,19 @@
+name: Smoketest
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  smoketest:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+    env:
+        PULL_REQUEST_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - uses: actions/checkout@v1
+      - run: sudo -E ./smoketest.sh
