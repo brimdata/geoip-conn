@@ -10,22 +10,19 @@ else
   PACKAGE_SHA="$PULL_REQUEST_HEAD_SHA"
 fi
 
-# Alas, we must compile Zeek because I've found the binary distributions are
-# not compiled with libmaxminddb.
-apt-get update
-apt-get install cmake make gcc g++ flex bison libpcap-dev libssl-dev python-dev swig zlib1g-dev libmaxminddb-dev
-git clone --recursive https://github.com/zeek/zeek zeek-src
-cd zeek-src
-./configure --prefix=/usr/local/zeek
-make -j$(nproc)
-make -j$(nproc) install
+# Install the latest binary feature release build of Zeek per instructions at
+# https://software.opensuse.org//download.html?project=security%3Azeek&package=zeek
+echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_18.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
+curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_18.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security:zeek.gpg > /dev/null
+sudo apt update
+sudo apt -y install zeek
 
 # Add Zeek Package Manager and current revision of the geoip-conn package
 pip install zkg
-export PATH="/usr/local/zeek/bin:$PATH"
+export PATH="/opt/zeek/bin:$PATH"
 zkg autoconfig
 zkg install --force geoip-conn --version "$PACKAGE_SHA"
-echo '@load packages' | tee -a /usr/local/zeek/share/zeek/site/local.zeek
+echo '@load packages' | tee -a /opt/zeek/share/zeek/site/local.zeek
 
 # Do a lookup of an IP that's known to have a stable location.
 zeek -e "print lookup_location(199.83.220.115);" local | grep "San Francisco"
