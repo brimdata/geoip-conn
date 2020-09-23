@@ -1,0 +1,36 @@
+name: Create a PR to update the GeoLite2 database
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-db:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        path: geoip-conn
+    - name: Download latest GeoLite2 City database
+      run: |
+        curl -o geo.tgz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}"
+        tar xzvf geo.tgz
+        mv GeoLite2*/GeoLite2-City.mmdb geoip-conn/zeek
+    - name: Extract datestamp
+      run: |
+        GEODIR=$(ls -d Geo*)
+        DATESTR=$(echo $GEODIR | cut -f2 -d_)
+        YEAR=${DATESTR:0:4}
+        MONTH=${DATESTR:4:2}
+        DAY=${DATESTR:6:2}
+        DATESTAMP="${YEAR}-${MONTH}-${DAY}"
+        echo "##[set-output name=datestmp;]$(echo ${DATESTAMP})"
+      id: extract_datestamp
+    - name: Create Pull Request containing updated GeoLite2 database
+      uses: peter-evans/create-pull-request@v3
+      with:
+        path: geoip-conn
+        commit-message: Update GeoLite2 database to ${{ steps.extract_datestamp.outputs.datestmp }} release
+        branch: geolite2-update-${{ steps.extract_datestamp.outputs.datestmp }}
+        delete-branch: true
+        title: Update GeoLite2 database to ${{ steps.extract_datestamp.outputs.datestmp }} release
+        reviewers: philrz
