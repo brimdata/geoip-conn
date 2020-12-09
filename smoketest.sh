@@ -18,7 +18,7 @@ sudo apt update
 sudo apt -y install zeek
 
 # Add Zeek Package Manager and current revision of the geoip-conn package
-pip install zkg
+pip3 install zkg
 export PATH="/opt/zeek/bin:$PATH"
 zkg autoconfig
 zkg install --force geoip-conn --version "$PACKAGE_SHA"
