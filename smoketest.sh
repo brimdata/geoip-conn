@@ -20,8 +20,8 @@ sudo apt -y install zeek python3-setuptools
 # Add Zeek Package Manager and current revision of the geoip-conn package
 pip3 install zkg wheel
 export PATH="/opt/zeek/bin:$PATH"
-~/.local/bin/zkg autoconfig
-~/.local/bin/zkg install --force geoip-conn --version "$PACKAGE_SHA"
+zkg autoconfig
+zkg install --force geoip-conn --version "$PACKAGE_SHA"
 echo '@load packages' | tee -a /opt/zeek/share/zeek/site/local.zeek
 
 # Do a lookup of an IP that's known to have a stable location.
