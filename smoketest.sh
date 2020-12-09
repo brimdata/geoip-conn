@@ -15,13 +15,13 @@ fi
 echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_18.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
 curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_18.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security:zeek.gpg > /dev/null
 sudo apt update
-sudo apt -y install zeek
+sudo apt -y install zeek python3-setuptools
 
 # Add Zeek Package Manager and current revision of the geoip-conn package
-pip3 install zkg
+pip3 install zkg wheel
 export PATH="/opt/zeek/bin:$PATH"
-zkg autoconfig
-zkg install --force geoip-conn --version "$PACKAGE_SHA"
+~/.local/bin/zkg autoconfig
+~/.local/bin/zkg install --force geoip-conn --version "$PACKAGE_SHA"
 echo '@load packages' | tee -a /opt/zeek/share/zeek/site/local.zeek
 
 # Do a lookup of an IP that's known to have a stable location.
