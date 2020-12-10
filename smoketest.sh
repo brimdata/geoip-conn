@@ -15,10 +15,10 @@ fi
 echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_18.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
 curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_18.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security:zeek.gpg > /dev/null
 sudo apt update
-sudo apt -y install zeek
+sudo apt -y install zeek python3-setuptools
 
 # Add Zeek Package Manager and current revision of the geoip-conn package
-pip install zkg
+pip3 install zkg wheel
 export PATH="/opt/zeek/bin:$PATH"
 zkg autoconfig
 zkg install --force geoip-conn --version "$PACKAGE_SHA"
