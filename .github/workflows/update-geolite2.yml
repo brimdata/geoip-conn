@@ -23,14 +23,14 @@ jobs:
         MONTH=${DATESTR:4:2}
         DAY=${DATESTR:6:2}
         DATESTAMP="${YEAR}-${MONTH}-${DAY}"
-        echo "name=$(echo ${DATESTAMP})" >> $GITHUB_OUTPUT
+        echo "datestamp=$(echo ${DATESTAMP})" >> $GITHUB_OUTPUT
       id: extract_datestamp
     - name: Create Pull Request containing updated GeoLite2 database
       uses: peter-evans/create-pull-request@v3
       with:
         path: geoip-conn
-        commit-message: Update GeoLite2 database to ${{ steps.extract_datestamp.outputs.datestmp }} release
-        branch: geolite2-update-${{ steps.extract_datestamp.outputs.datestmp }}
+        commit-message: Update GeoLite2 database to ${{ steps.extract_datestamp.outputs.datestamp }} release
+        branch: geolite2-update-${{ steps.extract_datestamp.outputs.datestamp }}
         delete-branch: true
-        title: Update GeoLite2 database to ${{ steps.extract_datestamp.outputs.datestmp }} release
+        title: Update GeoLite2 database to ${{ steps.extract_datestamp.outputs.datestamp }} release
         reviewers: philrz
