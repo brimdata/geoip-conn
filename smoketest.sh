@@ -12,10 +12,10 @@ fi
 
 # Install the latest binary feature release build of Zeek per instructions at
 # https://software.opensuse.org//download.html?project=security%3Azeek&package=zeek
-echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_18.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
-curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_18.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security:zeek.gpg > /dev/null
-sudo apt update
-sudo apt -y install zeek python3-setuptools
+echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_20.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
+curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_20.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null
+sudo apt-get update
+sudo apt-get -y install zeek python3-setuptools
 
 # Add Zeek Package Manager and current revision of the geoip-conn package
 pip3 install zkg wheel

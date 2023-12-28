@@ -4,14 +4,15 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - main
+  workflow_dispatch:
 
 jobs:
   smoketest:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04]
+        os: [ubuntu-20.04]
     env:
         PULL_REQUEST_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
     steps:
