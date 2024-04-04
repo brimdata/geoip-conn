@@ -19,6 +19,8 @@ export {
 		city: string &optional &log;
 		latitude: double &optional &log;
 		longitude: double &optional &log;
+		as_number: count &optional &log;
+		as_org: string &optional &log;
 	};
 
 	type GeoPair: record {
@@ -45,6 +47,11 @@ event connection_state_remove(c: connection)
 		orig_geo$latitude = orig_loc$latitude;
 	if ( orig_loc?$longitude )
 		orig_geo$longitude = orig_loc$longitude;
+	local orig_as_info = lookup_autonomous_system(c$id$orig_h);
+	if ( orig_as_info?$number )
+		orig_geo$as_number = orig_as_info$number;
+	if ( orig_as_info?$organization )
+		orig_geo$as_org = orig_as_info$organization;
 
 	local resp_geo: GeoInfo;
 	local resp_loc = lookup_location(c$id$resp_h);
@@ -58,6 +65,11 @@ event connection_state_remove(c: connection)
 		resp_geo$latitude = resp_loc$latitude;
 	if ( resp_loc?$longitude )
 		resp_geo$longitude = resp_loc$longitude;
+	local resp_as_info = lookup_autonomous_system(c$id$resp_h);
+	if ( resp_as_info?$number )
+		resp_geo$as_number = resp_as_info$number;
+	if ( resp_as_info?$organization )
+		resp_geo$as_org = resp_as_info$organization;
 
 	local geo_pair: GeoPair;
 	geo_pair$orig = orig_geo;
@@ -66,4 +78,3 @@ event connection_state_remove(c: connection)
 	c$conn$geo = geo_pair;
 
 	}
-
