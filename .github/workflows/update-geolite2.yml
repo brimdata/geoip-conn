@@ -10,11 +10,14 @@ jobs:
     - uses: actions/checkout@v3
       with:
         path: geoip-conn
-    - name: Download latest GeoLite2 City database
+    - name: Download GeoLite2 databases
       run: |
-        curl -o geo.tgz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}"
-        tar xzvf geo.tgz
+        curl -o geo-city.tgz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}"
+        tar xzvf geo-city.tgz
         mv GeoLite2*/GeoLite2-City.mmdb geoip-conn/zeek
+        curl -o geo-asn.tgz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&suffix=tar.gz&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}"
+        tar xzvf geo-asn.tgz
+        mv GeoLite2*/GeoLite2-ASN.mmdb geoip-conn/zeek
     - name: Extract datestamp
       run: |
         GEODIR=$(ls -d Geo*)
